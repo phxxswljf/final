@@ -20,7 +20,23 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module random(
 
+    
+    module random(
+        input enable,
+        output reg [3:0] target
     );
-endmodule
+    
+    // 用于生成随机数的计数器
+    reg [7:0] counter;
+    
+    always @(posedge enable) begin
+        // 更新计数器
+        counter <= counter + 1'b1;
+        // 生成0到9之间的随机数
+        target <= counter % 10;
+    end
+    
+    endmodule
+
+    

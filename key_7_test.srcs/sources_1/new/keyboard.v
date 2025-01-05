@@ -1,8 +1,11 @@
+`timescale 1ns / 1ps
+
 module ps2_keyboard (
     input wire clk,                 // FPGA系统时钟
     input wire ps2_clk,             // PS/2时钟信号
     input wire ps2_data,            // PS/2数据线
     input wire rst,
+    input wire enable,
     output reg [3:0] final_input  
 );
 
@@ -16,7 +19,7 @@ module ps2_keyboard (
     assign      key = { shift2[8:1], shift1[8:1] };
 
     always @(posedge clk or posedge rst) begin
-        if (rst) begin
+        if (rst||!enable) begin
             ps2c            <= 1;
             ps2d            <= 1;
             ps2c_fliter     <= 0;
@@ -38,7 +41,7 @@ module ps2_keyboard (
     end
 
     always @(negedge ps2c or posedge rst) begin
-        if (rst) begin
+        if (rst||!enable) begin
             shift1 <= 0;
             shift2 <= 0;
         end else begin
@@ -48,7 +51,7 @@ module ps2_keyboard (
     end 
 
     always @(posedge clk) begin
-        if (!rst) begin
+        if (!rst && enable) begin
             case (key)
                 16'hF045: begin // 0
                     final_input <= 4'b0000;

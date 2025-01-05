@@ -16,6 +16,8 @@ set_property parent.project_path D:/vivado/key_7_test/key_7_test.xpr [current_pr
 set_property default_lib xil_defaultlib [current_project]
 set_property target_language Verilog [current_project]
 read_verilog -library xil_defaultlib {
+  D:/vivado/key_7_test/key_7_test.srcs/sources_1/new/random.v
+  D:/vivado/key_7_test/key_7_test.srcs/sources_1/new/timer.v
   D:/vivado/key_7_test/key_7_test.srcs/sources_1/new/display.v
   D:/vivado/key_7_test/key_7_test.srcs/sources_1/new/keyboard.v
   D:/vivado/key_7_test/key_7_test.srcs/sources_1/new/top.v

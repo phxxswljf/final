@@ -22,11 +22,12 @@
 module display7(
     input [3:0] iData,
     output  reg [6:0] oData,
+    input  wire enable,
     input rst
     );
     
 always @(*) begin
-    if(rst)
+    if(rst||!enable)
         oData=7'b1000000;  //0
     else begin
         case (iData)      

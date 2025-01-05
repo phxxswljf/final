@@ -22,6 +22,7 @@
 module timer(
     input wire clk,               // 输入时钟（100 MHz）
     input wire rst,               // 复位信号
+    input wire enable,
     output reg timeout,           // 超时信号
     output reg [7:0] clk_out      // 每秒计数值（直接作为 timeout_counter）
 );
@@ -31,7 +32,7 @@ module timer(
 
     // 1Hz 时钟生成
     always @(posedge clk or posedge rst) begin
-        if (rst) begin
+        if (rst||!enable) begin
             clk_counter <= 0;
             clk_enable <= 0;
        end else if (clk_counter == 27'd99999999) begin
@@ -45,7 +46,7 @@ module timer(
 
     // 超时检测与计数
     always @(posedge clk or posedge rst) begin
-        if (rst) begin
+        if (rst||!enable) begin
             clk_out <= 16;         // 重置计时器
             timeout <= 0;
         end else if (clk_enable) begin
